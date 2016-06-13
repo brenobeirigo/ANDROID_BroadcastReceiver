@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    package="com.bbgo.appbroadcastreceiver"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!--
+         DEFINIÇÃO DE UM RECEIVER ESTÁTICO
+           * Sempre intercepta  eventos, mesmo quando a aplicação está fechada.
+           * Exemplo: interceptação de mensagens SMS ou Push.
+
+         Do jeito que foi definido, qualquer aplicação pode enviar uma mensagem que será interceptada
+        pelo receiver. Caso queira evitar esse comportamento, configure o receiver com o atributo:
+
+        android:exported="false";
+
+        Assim, o receiver somente irá receber mensagens da sua própria aplicação. -->
+        <receiver android:name=".HelloReceiver">
+            <intent-filter>
+                <action android:name="BINGO"/>
+                <!-- Iniciar junto com o sistema: android.intent.action.BOOT_COMPLETED -->
+                <!-- Iniciar após receber mensagem: android.provider.Telephony.SMS_RECEIVED" -->
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".HelloWireless">
+            <intent-filter>
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
